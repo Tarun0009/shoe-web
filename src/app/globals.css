@@ -1,1 +1,104 @@
 @import "tailwindcss";
+
+@theme {
+  --color-cream: #f5f1ea;
+  --color-cream-50: #faf7f2;
+  --color-sand: #e8e1d5;
+  --color-ink: #0a0a0a;
+  --color-ink-soft: #1f1f1f;
+  --color-mute: #6b6b66;
+  --color-terracotta: #d64e1e;
+  --color-terracotta-dark: #b23e13;
+  --color-sage: #5a6b4e;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Instrument Serif", "Cormorant", "Playfair Display", Georgia,
+    "Times New Roman", serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  overflow-x: clip;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* enforce serif stack on any .font-serif usage even if Tailwind reset wins */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-cream);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 45s linear infinite;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-up {
+  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fade-in {
+  animation: fadeIn 1.2s ease-out both;
+}
+
+/* subtle film-grain overlay */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.9'/></svg>");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-fade-up,
+  .animate-fade-in {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
